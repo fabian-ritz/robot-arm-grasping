@@ -1,0 +1,36 @@
+##########################
+Agent: ppo_lift5d_5000000
+Unity Scene: Lift5d_final
+##########################
+	model = PPO(env=env,policy='MlpPolicy',
+                batch_size=128,
+                n_steps=8192,  # authors used 512 samples * 16 envs in their paper
+                gamma=0.99,
+                gae_lambda=0.9,
+                n_epochs=20,
+                ent_coef=0.0,
+                use_sde=True,
+                sde_sample_freq=8,
+                max_grad_norm=0.5,
+                vf_coef=0.5,
+                learning_rate=0.00003,
+                clip_range=0.4,
+                policy_kwargs=dict(log_std_init=-2,
+                                   ortho_init=False,
+                                   activation_fn=torch.nn.ReLU,
+                                   net_arch=dict(pi=[256, 256], vf=[256, 256]),
+                                   optimizer_kwargs=dict(betas=(0.999, 0.999))),
+                verbose=1}		 
+############################################
+Eval (500 Episodes, 100 collisions allowed)
+############################################
+Success rate:     0.95
+avg. target oob:  0.03
+avg. score:       7.74
+avg. grips:       1.5
+avg. collisions:  0.82
+avg. target dist: 0.02
+avg. goal dist:   0.65
+avg. steps:       164.06
+avg. return:      16.8
+#######################
